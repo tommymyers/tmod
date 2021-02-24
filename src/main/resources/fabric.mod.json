@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "Utility mod with the following tweaks: Potion Time",
+  "authors": [
+    {
+      "name": "tommykins",
+      "contact": {
+        "homepage": "https://tommymyers.cc"
+      }
+    }
+  ],
+  "contact": {
+    "homepage": "https://tmod.cc",
+    "sources": "https://github.com/tommymyers/tmod"
+  },
+  "license": "MIT",
+  "icon": "assets/tmod/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "cc.tommymyers.tmod.TmodClient"
+    ]
+  },
+  "mixins": [
+    "tmod.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.1",
+    "fabric": "*"
+  }
+}
