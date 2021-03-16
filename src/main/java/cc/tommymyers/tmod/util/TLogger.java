@@ -3,13 +3,13 @@ package cc.tommymyers.tmod.util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class TmodLogger {
+public class TLogger {
 
     private final String modId;
     private final String prefix;
     private Logger logger;
 
-    public TmodLogger(String modId, String prefix) {
+    public TLogger(String modId, String prefix) {
         this.modId = modId;
         this.prefix = prefix;
         logger = LogManager.getLogger(modId);

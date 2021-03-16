@@ -3,17 +3,11 @@
   "id": "${mod_id}",
   "version": "${version}",
   "name": "${mod_name}",
-  "description": "Utility mod with the following tweaks: Potion Time",
+  "description": "Utility mod with the following tweaks: Potion Time, Armour Durability",
   "authors": [
-    {
-      "name": "tommykins",
-      "contact": {
-        "homepage": "https://tommymyers.cc"
-      }
-    }
+    "tommykins"
   ],
   "contact": {
-    "homepage": "https://tmod.cc",
     "sources": "https://github.com/tommymyers/tmod"
   },
   "license": "MIT",
@@ -21,7 +15,10 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "cc.tommymyers.tmod.TmodClient"
+      "cc.tommymyers.tmod.Tmod"
+    ],
+    "modmenu": [
+      "cc.tommymyers.tmod.modmenu.ModMenuIntegration"
     ]
   },
   "mixins": [

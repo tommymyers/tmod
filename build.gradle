@@ -6,26 +6,45 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-archivesBaseName = project.mod_file_name+"-mc"+project.properties.minecraft_version
-version = project.mod_version
+task incrementBuildNumber {
+    Properties props = new Properties()
+    File propsFile = new File("build_number.properties")
+    props.load propsFile.newDataInputStream()
+    Integer nextBuildNumber = ((props.getProperty("build_number")) as BigDecimal) + 1
+    props.setProperty "build_number", nextBuildNumber.toString()
+    props.store propsFile.newWriter(), null
+    props.load propsFile.newDataInputStream()
+    project.version = "${mod_version}+build.${nextBuildNumber}"
+}
+
+processResources.dependsOn incrementBuildNumber
+
+archivesBaseName = project.mod_file_name+"-mc"+project.minecraft_version
 group = project.group
+
+repositories {
+    maven {
+        url "https://maven.terraformersmc.com/releases/"
+    }
+}
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    modImplementation "com.terraformersmc:modmenu:${project.mod_menu_version}"
 }
 
 processResources {
 
     from(sourceSets.main.resources.srcDirs) {
-        include "fabric.mod.json", "assets/tmod/lang/*.json"
+        include "fabric.mod.json"
         expand project.properties
     }
 
     from(sourceSets.main.resources.srcDirs) {
-        exclude "fabric.mod.json", "assets/tmod/lang/*.json"
+        exclude "fabric.mod.json"
     }
 
 }
