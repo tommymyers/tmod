@@ -4,11 +4,13 @@ import cc.tommymyers.tmod.Tmod;
 import cc.tommymyers.tmod.webapi.endpoints.Versions;
 import org.apache.maven.artifact.versioning.ComparableVersion;
 
-import java.io.IOException;
-
 public class Updater {
 
-    public static boolean hasCheckedForUpdate = false;
+    private static boolean hasCheckedForUpdate = false;
+
+    public static boolean hasCheckedForUpdate() {
+        return hasCheckedForUpdate;
+    }
 
     private static Versions.Response.Version latestVersion;
 
