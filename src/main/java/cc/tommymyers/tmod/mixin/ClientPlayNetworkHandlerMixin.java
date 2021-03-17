@@ -19,7 +19,7 @@ public class ClientPlayNetworkHandlerMixin {
             at = @At("TAIL")
     )
     private void onGameJoin(GameJoinS2CPacket packet, CallbackInfo ci) {
-        if (!Updater.hasCheckedForUpdate) {
+        if (!Updater.hasCheckedForUpdate()) {
             if (Updater.checkForUpdates()) {
                 String newVersion = Updater.getLatestVersion().getId();
                 String url = Updater.getLatestVersion().getUrl();
@@ -34,7 +34,6 @@ public class ClientPlayNetworkHandlerMixin {
 
                 Tmod.mc.inGameHud.getChatHud().addMessage(baseText);
             }
-            Updater.hasCheckedForUpdate = true;
         }
     }
 
