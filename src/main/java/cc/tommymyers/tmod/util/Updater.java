@@ -2,6 +2,7 @@ package cc.tommymyers.tmod.util;
 
 import cc.tommymyers.tmod.Tmod;
 import cc.tommymyers.tmod.webapi.endpoints.Versions;
+import org.apache.maven.artifact.versioning.ComparableVersion;
 
 public class Updater {
 
@@ -23,7 +24,9 @@ public class Updater {
                 latestVersion = Versions.getLatest();
             }
             hasCheckedForUpdate = true;
-            return Tmod.modVersion.compareTo(latestVersion.getId()) < 0;
+            ComparableVersion currentVersion = new ComparableVersion(Tmod.modVersion);
+            ComparableVersion latestVersion = new ComparableVersion(getLatestVersion().getId());
+            return currentVersion.compareTo(latestVersion) < 0;
         } catch (Exception exception) {
             Tmod.logger.error("Error occurred when checking for update", exception);
         }

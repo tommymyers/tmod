@@ -34,6 +34,8 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     modImplementation "com.terraformersmc:modmenu:${project.mod_menu_version}"
+    implementation "org.apache.maven:maven-artifact:3.6.3"
+    include "org.apache.maven:maven-artifact:3.6.3"
 }
 
 processResources {
