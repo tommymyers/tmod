@@ -2,13 +2,14 @@ package cc.tommymyers.tmod.util;
 
 import cc.tommymyers.tmod.Tmod;
 import cc.tommymyers.tmod.webapi.endpoints.Versions;
-import com.google.gson.JsonSyntaxException;
-
-import java.io.IOException;
 
 public class Updater {
 
-    public static boolean hasCheckedForUpdate = false;
+    private static boolean hasCheckedForUpdate = false;
+
+    public static boolean hasCheckedForUpdate() {
+        return hasCheckedForUpdate;
+    }
 
     private static Versions.Response.Version latestVersion;
 
@@ -21,11 +22,10 @@ public class Updater {
             if (latestVersion == null) {
                 latestVersion = Versions.getLatest();
             }
+            hasCheckedForUpdate = true;
             return Tmod.modVersion.compareTo(latestVersion.getId()) < 0;
-        } catch (IOException ioException) {
-            Tmod.logger.error("I/O Exception when checking for update", ioException);
-        } catch (JsonSyntaxException jsonSyntaxException) {
-            Tmod.logger.error("Invalid/Unexpected JSON in version server's response", jsonSyntaxException);
+        } catch (Exception exception) {
+            Tmod.logger.error("Error occurred when checking for update", exception);
         }
         return false;
     }
