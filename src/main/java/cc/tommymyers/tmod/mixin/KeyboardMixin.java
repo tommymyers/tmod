@@ -11,17 +11,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class KeyboardMixin {
 
     @Inject(
-            method = "onKey",
-            cancellable = true,
-            at = @At(
-                    value = "FIELD",
-                    target = "Lnet/minecraft/client/Keyboard;debugCrashStartTime:J"
-            )
+        method = "onKey",
+        cancellable = true,
+        at = @At(
+            value = "FIELD",
+            target = "Lnet/minecraft/client/Keyboard;debugCrashStartTime:J"
+        )
     )
-    private void onKeyboardInput(long windowPointer, int key, int scanCode, int action, int modifiers, CallbackInfo ci)
-    {
+    private void onKeyboardInput(long windowPointer, int key, int scanCode, int action, int modifiers, CallbackInfo ci) {
         if (InputHandler.processKey(key, action)) {
             ci.cancel();
         }
     }
+
 }
