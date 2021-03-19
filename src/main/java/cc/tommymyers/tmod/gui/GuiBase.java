@@ -31,7 +31,7 @@ public class GuiBase extends Screen {
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         for (Widget widget: this.widgets) {
             if (widget.isMouseOver((int) mouseX, (int) mouseY) &&
-                    widget.mouseClicked((int) mouseX, (int) mouseY, button)) {
+                widget.mouseClicked((int) mouseX, (int) mouseY, button)) {
                 return true;
             }
         }

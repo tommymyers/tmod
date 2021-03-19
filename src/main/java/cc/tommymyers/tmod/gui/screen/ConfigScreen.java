@@ -2,7 +2,8 @@ package cc.tommymyers.tmod.gui.screen;
 
 import cc.tommymyers.tmod.Tmod;
 import cc.tommymyers.tmod.gui.GuiBase;
-import cc.tommymyers.tmod.gui.widget.*;
+import cc.tommymyers.tmod.gui.widget.ListWidget;
+import cc.tommymyers.tmod.gui.widget.TextWidget;
 import cc.tommymyers.tmod.gui.widget.config.TweakToggleButton;
 import cc.tommymyers.tmod.tweak.Tweak;
 import net.minecraft.client.util.math.MatrixStack;
@@ -18,16 +19,16 @@ public class ConfigScreen extends GuiBase {
         super.init();
         int y = 34;
         this.addWidget(new ListWidget(
-                32,
-                32,
-                this.width - 32,
-                this.height - 32
+            32,
+            32,
+            this.width - 32,
+            this.height - 32
         ));
 /*        this.addWidget(new CheckboxWidget(true, 34 + 16, 34 + 32 + 32, value -> {
             Tmod.logger.info("New Value: "+value);
         }));
         this.addWidget(new TextWidget("Display even if the screen is off?", 34 + 16 + 26, 34 + 32 + 32 + 6, new TextWidget.Tooltip("This is some random description that is just a random sentence.")));*/
-        for (Tweak tweak : Tmod.tweaks.all()) {
+        for (Tweak tweak: Tmod.tweaks.all()) {
             int x = 34;
             /*this.addWidget(new CollapsibleWidget(
                 x - 4,
@@ -58,4 +59,5 @@ public class ConfigScreen extends GuiBase {
         //fill(matrixStack, 32, 32, width - 32 - 6, 64, 0x40ffffff);
         super.render(matrixStack, mouseX, mouseY, delta);
     }
+
 }

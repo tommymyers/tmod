@@ -37,7 +37,7 @@ public class ButtonWidget extends Widget {
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float delta) {
         Tmod.mc.getTextureManager().bindTexture(TEXTURE);
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        int i = isMouseOver(mouseX, mouseY) ? 2 : 1;
+        int i = isMouseOver(mouseX, mouseY)? 2: 1;
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
@@ -48,7 +48,9 @@ public class ButtonWidget extends Widget {
 
     @FunctionalInterface
     public interface PressAction {
+
         void onClick(ButtonWidget button);
+
     }
 
 }
