@@ -4,7 +4,9 @@ import cc.tommymyers.tmod.Tmod;
 import cc.tommymyers.tmod.util.Updater;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.packet.s2c.play.GameJoinS2CPacket;
-import net.minecraft.text.*;
+import net.minecraft.text.ClickEvent;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
 import net.minecraft.util.Formatting;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,8 +17,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ClientPlayNetworkHandlerMixin {
 
     @Inject(
-            method = "onGameJoin",
-            at = @At("TAIL")
+        method = "onGameJoin",
+        at = @At("TAIL")
     )
     private void onGameJoin(GameJoinS2CPacket packet, CallbackInfo ci) {
         if (!Updater.hasCheckedForUpdate()) {

@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier;
 
 public class CheckboxWidget extends Widget {
 
-    private ValueChanged valueChanged;
+    private final ValueChanged valueChanged;
     private static final Identifier TEXTURE = new Identifier("textures/gui/checkbox.png");
     private boolean enabled = true;
     private boolean checked;
@@ -38,7 +38,7 @@ public class CheckboxWidget extends Widget {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
-        drawTexture(matrixStack, this.x, this.y, isMouseOver(mouseX, mouseY) ? 20.0F : 0.0F, this.checked ? 20.0F : 0.0F, 20, this.height, 64, 64);
+        drawTexture(matrixStack, this.x, this.y, isMouseOver(mouseX, mouseY)? 20.0F: 0.0F, this.checked? 20.0F: 0.0F, 20, this.height, 64, 64);
     }
 
     @Override

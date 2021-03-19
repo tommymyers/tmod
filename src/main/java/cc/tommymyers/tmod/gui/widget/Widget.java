@@ -48,7 +48,7 @@ public abstract class Widget extends DrawableHelper implements Drawable {
     }
 
     public boolean isMouseOver(int mouseX, int mouseY) {
-        return x <= mouseX && mouseX <= this.x+this.width && this.y <= mouseY && mouseY <= this.y+this.height;
+        return x <= mouseX && mouseX <= this.x + this.width && this.y <= mouseY && mouseY <= this.y + this.height;
     }
 
 }

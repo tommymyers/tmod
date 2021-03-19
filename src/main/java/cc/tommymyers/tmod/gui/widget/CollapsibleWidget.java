@@ -10,7 +10,7 @@ public class CollapsibleWidget extends Widget {
 
     private static final Identifier TEXTURE = new Identifier(Tmod.modId, "textures/gui/folding_icons.png");
     private boolean isExpanded;
-    private ClickAction clickAction;
+    private final ClickAction clickAction;
 
     public CollapsibleWidget(int x, int y, boolean isExpanded, ClickAction clickAction) {
         super(x, y, 16, 16);
@@ -43,7 +43,7 @@ public class CollapsibleWidget extends Widget {
         matrixStack.translate(centerX, centerY, 0);
         matrixStack.scale(0.5f, 0.5f, 0.5f);
         matrixStack.translate(-centerX, -centerY, 0);
-        drawTexture(matrixStack, this.x, this.y, this.isExpanded() ? 32 : 0, isMouseOver(mouseX, mouseY) ? 32 : 0, 32, 32, 64, 64);
+        drawTexture(matrixStack, this.x, this.y, this.isExpanded()? 32: 0, isMouseOver(mouseX, mouseY)? 32: 0, 32, 32, 64, 64);
         matrixStack.pop();
     }
 
