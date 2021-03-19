@@ -5,8 +5,8 @@ import cc.tommymyers.tmod.tweak.Tweak;
 public class ArmourDurability extends Tweak {
 
     @Configurable(
-            name = "Number format",
-            description = "Change how the number is displayed (fraction or percentage)"
+        name = "Number format",
+        description = "Change how the number is displayed (fraction or percentage)"
     )
     public DisplayType displayType = DisplayType.FRACTION;
 
