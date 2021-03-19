@@ -16,7 +16,7 @@ import java.util.List;
 public class TextWidget extends Widget {
 
     private Tooltip tooltip = new Tooltip("");
-    private Text text;
+    private final Text text;
 
     public TextWidget(String text, int x, int y, Tooltip tooltip) {
         this(Text.of(text), x, y, tooltip);
@@ -50,7 +50,7 @@ public class TextWidget extends Widget {
 
     public static class Tooltip {
 
-        private List<Text> lines;
+        private final List<Text> lines;
 
         public Tooltip(String... tooltip) {
             this(Lists.transform(Arrays.asList(tooltip), Text::of));
@@ -65,7 +65,7 @@ public class TextWidget extends Widget {
                 int i = 0;
                 Iterator var6 = this.lines.iterator();
 
-                while(var6.hasNext()) {
+                while (var6.hasNext()) {
                     OrderedText orderedText = ((Text) var6.next()).asOrderedText();
                     int j = Tmod.mc.textRenderer.getWidth(orderedText);
                     if (j > i) {
@@ -119,10 +119,10 @@ public class TextWidget extends Widget {
                 VertexConsumerProvider.Immediate immediate = VertexConsumerProvider.immediate(Tessellator.getInstance().getBuffer());
                 matrixStack.translate(0.0D, 0.0D, 400.0D);
 
-                for(int s = 0; s < this.lines.size(); ++s) {
-                    OrderedText orderedText2 = ((Text) this.lines.get(s)).asOrderedText();
+                for (int s = 0; s < this.lines.size(); ++s) {
+                    OrderedText orderedText2 = this.lines.get(s).asOrderedText();
                     if (orderedText2 != null) {
-                        Tmod.mc.textRenderer.draw((OrderedText)orderedText2, (float)k, (float)l, -1, true, matrix4f, immediate, false, 0, 15728880);
+                        Tmod.mc.textRenderer.draw(orderedText2, (float) k, (float) l, -1, true, matrix4f, immediate, false, 0, 15728880);
                     }
 
                     if (s == 0) {

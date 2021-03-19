@@ -21,7 +21,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import static cc.tommymyers.tmod.tweak.hud.PotionTime.Position.*;
+import static cc.tommymyers.tmod.tweak.hud.PotionTime.Position.ABOVE;
+import static cc.tommymyers.tmod.tweak.hud.PotionTime.Position.BELOW;
 
 @Mixin(InGameHud.class)
 public class InGameHudMixin extends DrawableHelper {
@@ -29,12 +30,12 @@ public class InGameHudMixin extends DrawableHelper {
     // Potion Time tweak
 
     @Inject(
-            method = "renderStatusEffectOverlay",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Ljava/util/List;add(Ljava/lang/Object;)Z"
-            ),
-            locals = LocalCapture.CAPTURE_FAILSOFT
+        method = "renderStatusEffectOverlay",
+        at = @At(
+            value = "INVOKE",
+            target = "Ljava/util/List;add(Ljava/lang/Object;)Z"
+        ),
+        locals = LocalCapture.CAPTURE_FAILSOFT
     )
     private void renderStatusEffectDuration(MatrixStack matrixStack, CallbackInfo callbackInfo, Collection<StatusEffectInstance> collection, int i1, int i2, StatusEffectSpriteManager statusEffectSpriteManager, List<Runnable> list, Iterator var8, StatusEffectInstance statusEffectInstance, StatusEffect statusEffect, int x, int y) {
         if (Tmod.tweaks.potionTime.isEnabled()) {
@@ -46,15 +47,15 @@ public class InGameHudMixin extends DrawableHelper {
                 // Scale the text down to fit in the width of one icon
                 float scaleFactor = potionDurationTextWidth / stringWidth;
                 float textX = x + 12;
-                float textY = y - 12;
+                float textY = y - 9;
                 if (potionTime.position == BELOW) {
-                    textY += 32;
+                    textY += 34;
                 }
                 matrixStack.push();
+                matrixStack.translate(textX, textY, 0f);
                 matrixStack.scale(scaleFactor, scaleFactor, 1.0f);
-                scaleFactor = stringWidth / potionDurationTextWidth;
-                matrixStack.translate(textX * scaleFactor, textY * scaleFactor, 0f);
-                drawCenteredString(matrixStack, Tmod.mc.textRenderer, durationString, 0, 0, 0xffffff);
+                matrixStack.translate(-textX, -textY, 0f);
+                drawCenteredString(matrixStack, Tmod.mc.textRenderer, durationString, (int) textX, (int) textY, 0xffffff);
                 matrixStack.pop();
             });
         }
@@ -63,28 +64,28 @@ public class InGameHudMixin extends DrawableHelper {
     // This changes how much farther down the "non-beneficial" potion effects are rendered (i.e. to make space for the text)
 
     @ModifyVariable(
-            method = "renderStatusEffectOverlay",
-            at = @At(
-                    value = "CONSTANT",
-                    args = "intValue=25",
-                    ordinal = 1
-            ),
-            ordinal = 3
+        method = "renderStatusEffectOverlay",
+        at = @At(
+            value = "CONSTANT",
+            args = "intValue=25",
+            ordinal = 1
+        ),
+        ordinal = 3
     )
     private int incrementY(int y) {
-        return Tmod.tweaks.potionTime.isEnabled() ? (y + 12) : y;
+        return Tmod.tweaks.potionTime.isEnabled()? (y + 10): y;
     }
 
     @ModifyConstant(
-            method = "renderStatusEffectOverlay",
-            constant = @Constant(
-                    intValue = 1
-            )
+        method = "renderStatusEffectOverlay",
+        constant = @Constant(
+            intValue = 1
+        )
     )
     private int initialY(int y) {
         if (Tmod.tweaks.potionTime.isEnabled()) {
             if (((PotionTime) Tmod.tweaks.potionTime).position == ABOVE) {
-                return y + 12;
+                return y + 9;
             }
         }
         return y;
@@ -93,13 +94,13 @@ public class InGameHudMixin extends DrawableHelper {
     // Armour Durability tweak
 
     @Inject(
-            method = "render(Lnet/minecraft/client/util/math/MatrixStack;F)V",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lcom/mojang/blaze3d/systems/RenderSystem;enableBlend()V",
-                    ordinal = 4
-            )
+        method = "render(Lnet/minecraft/client/util/math/MatrixStack;F)V",
+        at = @At(
+            value = "INVOKE",
+            target = "Lcom/mojang/blaze3d/systems/RenderSystem;enableBlend()V",
+            ordinal = 4
         )
+    )
     private void onRender(MatrixStack matrixStack, float partialTicks, CallbackInfo ci) {
         if (Tmod.mc.options.debugEnabled) {
             return;
@@ -125,7 +126,7 @@ public class InGameHudMixin extends DrawableHelper {
                             text = "invalid display type";
                             break;
                     }
-                    drawStringWithShadow(matrixStack, Tmod.mc.textRenderer, text, 30, y+5, 0xffffff);
+                    drawStringWithShadow(matrixStack, Tmod.mc.textRenderer, text, 30, y + 5, 0xffffff);
                 }
                 y += 16;
             }

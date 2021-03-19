@@ -7,7 +7,7 @@ public class TLogger {
 
     private final String modId;
     private final String prefix;
-    private Logger logger;
+    private final Logger logger;
 
     public TLogger(String modId, String prefix) {
         this.modId = modId;
@@ -15,14 +15,20 @@ public class TLogger {
         logger = LogManager.getLogger(modId);
     }
 
+    private String applyPrefix(String message) {
+        return "[" + prefix + "] " + message;
+    }
+
     public void info(String message) {
-        message = "["+prefix+"] "+message;
-        logger.info(message);
+        logger.info(applyPrefix(message));
+    }
+
+    public void error(String message) {
+        logger.error(applyPrefix(message));
     }
 
     public void error(String message, Throwable throwable) {
-        message = "["+prefix+"] "+message;
-        logger.error(message, throwable);
+        logger.error(applyPrefix(message), throwable);
     }
 
 }

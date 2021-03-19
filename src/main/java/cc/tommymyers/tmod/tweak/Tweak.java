@@ -1,27 +1,22 @@
 package cc.tommymyers.tmod.tweak;
 
-import cc.tommymyers.tmod.Tmod;
 import cc.tommymyers.tmod.config.ConfigurableOption;
-import cc.tommymyers.tmod.gui.widget.ButtonWidget;
-import cc.tommymyers.tmod.input.TKeybind;
-import com.google.common.collect.Lists;
-import org.apache.logging.log4j.util.Strings;
+import cc.tommymyers.tmod.input.Key;
+import cc.tommymyers.tmod.input.Keybind;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Tweak {
 
     private final String name;
     private final String description;
-    private TKeybind keybind;
+    private Keybind keybind;
     private boolean isEnabled;
 
     public String getName() {
@@ -32,7 +27,7 @@ public class Tweak {
         return this.description;
     }
 
-    public TKeybind getKeybind() {
+    public Keybind getKeybind() {
         return this.keybind;
     }
 
@@ -40,15 +35,25 @@ public class Tweak {
         return this.isEnabled;
     }
 
-    public void toggle() { this.isEnabled = !this.isEnabled; }
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
+
+    public void setKeybind(Keybind keybind) {
+        this.keybind = keybind;
+    }
+
+    public void toggle() {
+        this.isEnabled = !this.isEnabled;
+    }
 
     public Tweak(String name, String description) {
         this.name = name;
         this.description = description;
     }
 
-    public Tweak keybind(TKeybind keybind) {
-        this.keybind = keybind;
+    public Tweak keybind(Key... keys) {
+        this.keybind = new Keybind(keys);
         return this;
     }
 
@@ -59,17 +64,18 @@ public class Tweak {
 
     public List<ConfigurableOption> getConfigurableVariables() {
         List<ConfigurableOption> configurableOptions = new ArrayList<>();
-        try {
-            for (Field field: this.getClass().getDeclaredFields()) {
-                if (!field.isAnnotationPresent(Configurable.class))
-                    continue;
-
-                Configurable annotation = field.getAnnotation(Configurable.class);
-                ConfigurableOption configurable = new ConfigurableOption(field.getName(), annotation.name(), annotation.description(), field.get(this));
-                configurableOptions.add(configurable);
+        for (Field field: this.getClass().getDeclaredFields()) {
+            if (!field.isAnnotationPresent(Configurable.class)) {
+                continue;
             }
-        } catch (ReflectiveOperationException exception) {
-            Tmod.logger.error("Java Reflect error occurred", exception);
+            Configurable annotation = field.getAnnotation(Configurable.class);
+            configurableOptions.add(new ConfigurableOption(
+                field,
+                this,
+                field.getName(),
+                annotation.name(),
+                annotation.description()
+            ));
         }
         return configurableOptions;
     }

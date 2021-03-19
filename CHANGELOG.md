@@ -1,5 +1,13 @@
 # Changelog
 
+## \[dev][1.1.0+build.387] - 2021-03-19
+
+This is a dev build. It has new features but could also have some bugs.
+
+### Added
+
+- Tweak configuration now retains state when Minecraft is closed.
+
 ## \[dev][1.1.0+build.282] - 2021-03-17
 
 This is a dev build. It has new features but could also have some bugs.
