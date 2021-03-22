@@ -33,26 +33,28 @@ public class Config {
     }
 
     public void loadTweaks(Gson gson) throws IOException, ReflectiveOperationException {
-        JsonObject root = gson.fromJson(FileUtils.readFileToString(tweaksFile, ENCODING), JsonObject.class);
-        for (Map.Entry<String, JsonElement> entry: root.entrySet()) {
-            JsonObject tweakJsonObject = entry.getValue().getAsJsonObject();
-            Tweak tweak = Tmod.tweaks.tweaksById().get(entry.getKey());
-            tweak.setEnabled(tweakJsonObject.get("enabled").getAsBoolean());
-            tweak.setKeybind(Keybind.parse(tweakJsonObject.get("keybind").getAsString()));
-            if (!tweakJsonObject.has("options")) {
-                continue;
-            }
-            JsonObject tweakOptions = tweakJsonObject.get("options").getAsJsonObject();
-            for (Map.Entry<String, JsonElement> entry1: tweakOptions.entrySet()) {
-                Optional<ConfigurableOption> optional = tweak.getConfigurableVariables()
-                    .stream()
-                    .filter(c -> c.getPropertyName().equals(entry1.getKey()))
-                    .findFirst();
-                if (optional.isPresent()) {
-                    ConfigurableOption co = optional.get();
-                    Optional<ConfigurableOption.Reader> jsonHandlerOptional = co.getJsonReaderHandler();
-                    if (jsonHandlerOptional.isPresent()) {
-                        co.setValue(jsonHandlerOptional.get().handle(entry1.getValue()));
+        if (tweaksFile.exists()) {
+            JsonObject root = gson.fromJson(FileUtils.readFileToString(tweaksFile, ENCODING), JsonObject.class);
+            for (Map.Entry<String, JsonElement> entry: root.entrySet()) {
+                JsonObject tweakJsonObject = entry.getValue().getAsJsonObject();
+                Tweak tweak = Tmod.tweaks.tweaksById().get(entry.getKey());
+                tweak.setEnabled(tweakJsonObject.get("enabled").getAsBoolean());
+                tweak.setKeybind(Keybind.parse(tweakJsonObject.get("keybind").getAsString()));
+                if (!tweakJsonObject.has("options")) {
+                    continue;
+                }
+                JsonObject tweakOptions = tweakJsonObject.get("options").getAsJsonObject();
+                for (Map.Entry<String, JsonElement> entry1: tweakOptions.entrySet()) {
+                    Optional<ConfigurableOption> optional = tweak.getConfigurableVariables()
+                        .stream()
+                        .filter(c -> c.getPropertyName().equals(entry1.getKey()))
+                        .findFirst();
+                    if (optional.isPresent()) {
+                        ConfigurableOption co = optional.get();
+                        Optional<ConfigurableOption.Reader> jsonHandlerOptional = co.getJsonReaderHandler();
+                        if (jsonHandlerOptional.isPresent()) {
+                            co.setValue(jsonHandlerOptional.get().handle(entry1.getValue()));
+                        }
                     }
                 }
             }
